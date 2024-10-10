@@ -4,7 +4,7 @@ local RunService = game:GetService("RunService")
 local UIS = game:GetService("UserInputService")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
-local MyCharacter = LocalPlayer.Character
+local MyCharacter = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 local MyRoot = MyCharacter:FindFirstChild("HumanoidRootPart")
 local MyHumanoid = MyCharacter:FindFirstChild("Humanoid")
 local Mouse = LocalPlayer:GetMouse()
@@ -48,14 +48,18 @@ function FindNearestPlayer()
 	local dist = math.huge
 	local Target = nil
 	for _, v in pairs(Players:GetPlayers()) do
-		if v ~= LocalPlayer and v.Character:FindFirstChild("Humanoid") and v.Character:FindFirstChild("Humanoid").Health > 0 and v.Character:FindFirstChild("HumanoidRootPart") and v then
-			local TheirCharacter = v.Character
-			local CharacterRoot, Visible = MyView:WorldToViewportPoint(TheirCharacter[_G.AimPart].Position)
-			if Visible then
-				local RealMag = (Vector2.new(Mouse.X, Mouse.Y) - Vector2.new(CharacterRoot.X, CharacterRoot.Y)).Magnitude
-				if RealMag < dist and RealMag < FOVCircle.Radius then
-					dist = RealMag
-					Target = TheirCharacter
+		if v ~= LocalPlayer then
+			if v.Character then
+				if v.Character:FindFirstChild("Humanoid") and v.Character:FindFirstChild("Humanoid").Health > 0 and v.Character:FindFirstChild("HumanoidRootPart") and v then
+					local TheirCharacter = v.Character
+					local CharacterRoot, Visible = MyView:WorldToViewportPoint(TheirCharacter[_G.AimPart].Position)
+					if Visible then
+						local RealMag = (Vector2.new(Mouse.X, Mouse.Y) - Vector2.new(CharacterRoot.X, CharacterRoot.Y)).Magnitude
+						if RealMag < dist and RealMag < FOVCircle.Radius then
+							dist = RealMag
+							Target = TheirCharacter
+						end
+					end
 				end
 			end
 		end
