@@ -17,7 +17,7 @@ local Epitaph = .187 ---Note: The Bigger The Number, The More Prediction.
 local HeadOffset = Vector3.new(0, .1, 0)
 
 _G.TeamCheck = false
-_G.AimPart = "HumanoidRootPart"
+_G.AimPartBotZ = "HumanoidRootPart"
 _G.Sensitivity = 0
 _G.CircleSides = 64
 _G.CircleColor = Color3.fromRGB(255, 0, 130)
@@ -52,7 +52,7 @@ function FindNearestPlayer()
 			if v.Character then
 				if v.Character:FindFirstChild("Humanoid") and v.Character:FindFirstChild("Humanoid").Health > 0 and v.Character:FindFirstChild("HumanoidRootPart") and v then
 					local TheirCharacter = v.Character
-					local CharacterRoot, Visible = MyView:WorldToViewportPoint(TheirCharacter[_G.AimPart].Position)
+					local CharacterRoot, Visible = MyView:WorldToViewportPoint(TheirCharacter[_G.AimPartBotZ].Position)
 					if Visible then
 						local RealMag = (Vector2.new(Mouse.X, Mouse.Y) - Vector2.new(CharacterRoot.X, CharacterRoot.Y)).Magnitude
 						if RealMag < dist and RealMag < FOVCircle.Radius then
@@ -73,10 +73,10 @@ UIS.InputBegan:Connect(function(Input)
 		Active = true
 		Lock = true
 		if Active then
-        	local The_Enemy = FindNearestPlayer()
+			local The_Enemy = FindNearestPlayer()
 			while HoldingM2 and _G.EnabledJJSXKSGA == true do task.wait(.000001)
 				if Lock and The_Enemy ~= nil then
-					local Future = The_Enemy:FindFirstChild("HumanoidRootPart").CFrame
+					local Future = The_Enemy:FindFirstChild(_G.AimPartBotZ).CFrame
 					MyView.CFrame = CFrame.lookAt(MyView.CFrame.Position, Future.Position)
 					CursorLock()
 				end
