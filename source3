@@ -74,7 +74,7 @@ UIS.InputBegan:Connect(function(Input)
 		Lock = true
 		if Active then
 			local The_Enemy = FindNearestPlayer()
-			while HoldingM2 and _G.EnabledJJSXKSGA == true do task.wait(.000001)
+			while HoldingM2 and _G.EnabledJJSXKSGA3 == true do task.wait(.000001)
 				if Lock and The_Enemy ~= nil then
 					local Future = The_Enemy:FindFirstChild(_G.AimPartBotZ).CFrame
 					MyView.CFrame = CFrame.lookAt(MyView.CFrame.Position, Future.Position)
